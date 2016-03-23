@@ -1,0 +1,43 @@
+#include <dht11.h>
+#define dhtpin1 2
+#define dhtpin2 3
+//#define dhtpin3 4
+
+dht11 dht1;
+dht11 dht2;
+//dht11 dht3;
+void setup() {
+  dht1.attach(dhtpin1);
+  dht2.attach(dhtpin2);
+  dht2.attach(dhtpin2);
+ // dht3.attach(dhtpin3);
+   Serial.begin(9600); // seri port açar, data rate'i 9600 bps e ayarlar.
+   Serial.println("----MEASURING THE HUMIDITY AND THE TEMPERATURE----");
+}
+
+void loop() {
+ // Serial.println();
+ // Serial.println();
+//  Serial.println(dht3.read());
+dht1.read();
+dht2.read();
+  float h1 = dht1.humidity;
+  float h2 = dht2.humidity;
+  //float h3 = dht3.humidity;
+ // float mean = h1+h2+h3/3;
+ float mean = ((float)h1+(float)h2)/2;
+  if(isnan(h1) || isnan(h2)/* || isnan(h3)*/)
+    Serial.println("Failed to read from the sensor");
+  else{
+    Serial.print("Humidity measured from dht1: ");
+    Serial.println(h1);
+    Serial.print("Humidity measured from dht2: ");
+    Serial.println(h2);
+   // Serial.print("Humidity measured from dht3: ");
+   // Serial.println(h3);
+    Serial.print("Mean of two Humidities: ");
+    Serial.println(mean);
+    delay(2000);
+  }
+
+}
